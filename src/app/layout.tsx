@@ -8,6 +8,8 @@ const montserrat = Montserrat_Alternates({
 
 // Colour scheme
 // https://coolors.co/a7b59d-f9f3e5-e0e2d2-b3723e-cdc8bd
+// Convert
+// https://oklch.com/#96.5,0.0196,87.51,100
 
 export const metadata: Metadata = {
   title: "Bonanza",
