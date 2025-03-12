@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/Header";
 
 const montserrat = Montserrat_Alternates({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -22,7 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} antialiased`}>{children}</body>
+      <body
+        className={`${montserrat.className} antialiased min-h-screen w-full`}
+      >
+        <Header />
+        <main>{children}</main>
+        {/* Could add a footer for links, instagram & polarsteps */}
+      </body>
     </html>
   );
 }
