@@ -8,6 +8,7 @@ import mapboxgl from "mapbox-gl";
 import { motion } from "framer-motion";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { stops } from "@/data/locations";
+import { Position } from "geojson";
 
 // Step indicator component
 const StepIndicator = ({
@@ -116,6 +117,38 @@ export default function JourneyPage() {
     // Add the marker to the map
     stops.map(({ lngLat }) => {
       new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
+    });
+
+    map.on("load", () => {
+      // Add lines between stops
+      map.addSource("route", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: {
+            type: "LineString",
+            coordinates: stops.map(({ lngLat }) => [
+              lngLat.lng,
+              lngLat.lat,
+            ]) as Position[],
+          },
+        },
+      });
+      map.addLayer({
+        id: "route",
+        type: "line",
+        source: "route",
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#888",
+          "line-width": 4,
+          "line-dasharray": [10, 5],
+        },
+      });
     });
 
     map.on("movestart", () => {

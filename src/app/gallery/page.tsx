@@ -19,6 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { gallery } from "@/data/gallery";
 
 type Photos = {
   id: number;
@@ -31,55 +32,8 @@ type Photos = {
 // https://developers.facebook.com/docs/instagram-platform/oembed
 // Thinking of embedding our instagram posts
 
-// Sample photo data
-const photos = [
-  {
-    id: 1,
-    src: "/placeholder.svg?height=600&width=800",
-    date: "2023-06-15",
-    location: "Tokyo, Japan",
-    description: "Vibrant street scene in Shibuya Crossing",
-  },
-  {
-    id: 2,
-    src: "/placeholder.svg?height=600&width=800",
-    date: "2023-06-18",
-    location: "Kyoto, Japan",
-    description: "Serene moments at the Kinkaku-ji Golden Pavilion",
-  },
-  {
-    id: 3,
-    src: "/placeholder.svg?height=600&width=800",
-    date: "2023-06-22",
-    location: "Bali, Indonesia",
-    description: "Sunset at Tanah Lot Temple",
-  },
-  {
-    id: 4,
-    src: "/placeholder.svg?height=600&width=800",
-    date: "2023-06-25",
-    location: "Bali, Indonesia",
-    description: "Rice terraces in Tegalalang",
-  },
-  {
-    id: 5,
-    src: "/placeholder.svg?height=600&width=800",
-    date: "2023-06-30",
-    location: "Sydney, Australia",
-    description: "Iconic view of Sydney Opera House",
-  },
-  {
-    id: 6,
-    src: "/placeholder.svg?height=600&width=800",
-    date: "2023-07-03",
-    location: "Sydney, Australia",
-    description: "Bondi Beach on a sunny day",
-  },
-  // Add more photos as needed
-];
-
 // Helper function to group photos by month and year
-const groupPhotosByDate = (photos: Photos[]): { [key: string]: Photos[] } => {
+const groupPhotosByDate = (photos: any): { [key: string]: Photos[] } => {
   return photos.reduce((groups, photo) => {
     const date = new Date(photo.date);
     const monthYear = format(date, "MMMM yyyy");
@@ -92,7 +46,7 @@ const groupPhotosByDate = (photos: Photos[]): { [key: string]: Photos[] } => {
 };
 
 // Helper function to get unique locations
-const getUniqueLocations = (photos: Photos[]): string[] => {
+const getUniqueLocations = (photos: any): string[] => {
   return Array.from(new Set(photos.map((photo) => photo.location)));
 };
 
@@ -100,8 +54,8 @@ const PhotoCard = ({
   photo,
   onClick,
 }: {
-  photo: Photos;
-  onClick: Dispatch<SetStateAction<Photos | null>>;
+  photo: any;
+  onClick: Dispatch<SetStateAction<any>>;
 }) => (
   <Card
     className="overflow-hidden cursor-pointer transition-shadow hover:shadow-lg"
@@ -109,7 +63,7 @@ const PhotoCard = ({
   >
     <div className="relative aspect-square">
       <Image
-        src={photo.src || "/placeholder.svg"}
+        src={`/gallery/${photo.image}` || "/placeholder.svg"}
         alt={photo.description}
         fill
         className="object-cover"
@@ -137,17 +91,17 @@ const PhotoCard = ({
 
 export default function GalleryPage() {
   const [selectedLocation, setSelectedLocation] = useState("All Locations");
-  const [filteredPhotos, setFilteredPhotos] = useState<Photos[]>(photos);
-  const [selectedPhoto, setSelectedPhoto] = useState<Photos | null>(null);
+  const [filteredPhotos, setFilteredPhotos] = useState(gallery);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  const locations = ["All Locations", ...getUniqueLocations(photos)];
+  const locations = ["All Locations", ...getUniqueLocations(gallery)];
 
   useEffect(() => {
     if (selectedLocation === "All Locations") {
-      setFilteredPhotos(photos);
+      setFilteredPhotos(gallery);
     } else {
       setFilteredPhotos(
-        photos.filter((photo) => photo.location === selectedLocation)
+        gallery.filter((photo) => photo.location === selectedLocation)
       );
     }
   }, [selectedLocation]);
@@ -185,12 +139,8 @@ export default function GalleryPage() {
         <div key={monthYear} className="mb-8">
           <h2 className="text-2xl font-bold mb-4">{monthYear}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {photos.map((photo) => (
-              <PhotoCard
-                key={photo.id}
-                photo={photo}
-                onClick={setSelectedPhoto}
-              />
+            {photos.map((photo, idx) => (
+              <PhotoCard key={idx} photo={photo} onClick={setSelectedPhoto} />
             ))}
           </div>
         </div>
@@ -211,7 +161,7 @@ export default function GalleryPage() {
           <div className="relative aspect-video w-full overflow-hidden rounded-lg">
             {selectedPhoto && (
               <Image
-                src={selectedPhoto.src || "/placeholder.svg"}
+                src={`/gallery/${selectedPhoto.image}` || "/placeholder.svg"}
                 alt={selectedPhoto.description}
                 fill
                 className="object-cover"
