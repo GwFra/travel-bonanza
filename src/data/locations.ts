@@ -137,6 +137,7 @@ export const stops = [
     },
     // lngLat: [-156.3319, 20.7984 + 0.04] as LngLatLike,
     start: new Date("05/07/2025").getTime(),
+    image: "maui.jpg",
     description: "Moi moi",
   },
   {
@@ -148,6 +149,7 @@ export const stops = [
     },
     // lngLat: [151.2093, -33.8688 + 0.04] as LngLatLike,
     start: new Date("05/17/2025").getTime(),
+    image: "sydney.jpg",
     description: "",
   },
   {
@@ -159,6 +161,7 @@ export const stops = [
     },
     // lngLat: [168.6626, -45.0312 + 0.04] as LngLatLike,
     start: new Date("05/18/2025").getTime(),
+    image: "queenstown.jpg",
     description: "",
   },
 ];

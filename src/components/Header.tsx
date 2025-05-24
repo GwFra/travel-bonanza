@@ -14,10 +14,12 @@ export function Header() {
   return (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur border-b">
       <div className="flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <Image src={fav} height={24} alt="logo" />
-          <span className="font-bold text-xl">Bonanza</span>
-        </div>
+        <Link href={"/home"}>
+          <div className="flex items-center gap-2">
+            <Image src={fav} height={24} alt="logo" />
+            <span className="font-bold text-xl">Bonanza</span>
+          </div>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-6">
           {links.map((link: string, index: number) => {
