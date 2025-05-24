@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 
 const montserrat = Montserrat_Alternates({
+  subsets: ["cyrillic", "latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 

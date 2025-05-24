@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
@@ -92,7 +93,7 @@ const PhotoCard = ({
 export default function GalleryPage() {
   const [selectedLocation, setSelectedLocation] = useState("All Locations");
   const [filteredPhotos, setFilteredPhotos] = useState(gallery);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<any>(null);
 
   const locations = ["All Locations", ...getUniqueLocations(gallery)];
 
