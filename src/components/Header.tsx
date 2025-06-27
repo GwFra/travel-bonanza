@@ -35,7 +35,7 @@ export function Header() {
               <Link
                 key={index}
                 href={link}
-                className="text-sm font-medium aria-selected:text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium aria-selected:text-primary hover:text-primary transition-colors"
                 aria-selected={path === link}
               >
                 {disply}
