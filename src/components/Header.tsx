@@ -6,11 +6,17 @@ import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import fav from "@/app/favicon.ico";
-
-const links = ["/home", "/destinations", "/gallery"];
+// import { auth } from "@/auth";
+import { useSession } from "next-auth/react";
 
 export function Header() {
+  const session = useSession();
   const path = usePathname();
+  let links = ["/home", "/destinations", "/gallery"];
+  if (session.status === "authenticated") {
+    links = [...links, "/dashboard"];
+  }
+
   return (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur border-b">
       <div className="flex h-16 items-center justify-between px-4">
@@ -29,7 +35,7 @@ export function Header() {
               <Link
                 key={index}
                 href={link}
-                className="text-sm font-medium aria-selected:text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium aria-selected:text-primary hover:text-primary transition-colors"
                 aria-selected={path === link}
               >
                 {disply}

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 import { Header } from "@/components/Header";
+import { auth } from "@/auth";
 
 const montserrat = Montserrat_Alternates({
   subsets: ["cyrillic", "latin"],
@@ -17,20 +19,23 @@ export const metadata: Metadata = {
   title: "Bonanza",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="en">
-      <body
-        className={`${montserrat.className} antialiased min-h-screen w-full`}
-      >
-        <Header />
-        <main>{children}</main>
-        {/* Could add a footer for links, instagram & polarsteps */}
-      </body>
+      <SessionProvider session={session}>
+        <body
+          className={`${montserrat.className} antialiased min-h-screen w-full`}
+        >
+          <Header />
+          <main>{children}</main>
+          {/* Could add a footer for links, instagram & polarsteps */}
+        </body>
+      </SessionProvider>
     </html>
   );
 }
