@@ -31,9 +31,7 @@ export function PlaceCarouselItem({ destination }: ItemProps) {
         </div>
       </div>
       <CardContent className="p-4">
-        <p className="text-muted-foreground line-clamp-2">
-          {destination.description}
-        </p>
+        <p className="text-muted line-clamp-2">{destination.description}</p>
         {/* <Button variant="link" className="p-0 h-auto mt-2 font-medium">
           Read more
         </Button> */}

@@ -1,13 +1,17 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "@/db";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
-    strategy: "jwt",
+    strategy: "database",
   },
+  adapter: DrizzleAdapter(db),
   providers: [Google],
   callbacks: {
     async authorized({ auth }) {
+      console.log(auth);
       return !!auth;
     },
   },

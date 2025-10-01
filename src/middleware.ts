@@ -1,8 +1,3 @@
-// import { auth } from "@/auth";
-// import { NextResponse } from "next/server";
-
-// export { auth as middleware } from "@/auth";
-
 import { auth } from "@/auth";
 
 export default auth((req) => {
@@ -22,5 +17,6 @@ export const config = {
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
     "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/dashboard",
   ],
 };
