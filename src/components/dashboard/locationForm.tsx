@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { Locations } from "./location";
 import { Dispatch, SetStateAction } from "react";
+import { uploadFile } from "./locationDialog";
 
 export const LocationForm = ({
   value,
@@ -73,7 +74,7 @@ export const LocationForm = ({
                           className="object-cover"
                         />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-muted-foreground">
+                        <div className="flex items-center justify-center h-full text-foreground">
                           <Upload className="h-8 w-8" />
                         </div>
                       )}
@@ -82,8 +83,7 @@ export const LocationForm = ({
                       <Input
                         {...field}
                         id="location-image"
-                        // type="file"
-                        // accept="image/*"
+                        onChange={uploadFile}
                         className="hidden"
                       />
                       <Label

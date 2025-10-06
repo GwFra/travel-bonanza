@@ -15,6 +15,7 @@ import { CalendarIcon, Upload } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dispatch, SetStateAction } from "react";
+import { uploadFile } from "./locationDialog";
 
 export const GalleryForm = ({
   value,
@@ -51,7 +52,7 @@ export const GalleryForm = ({
                 <FormLabel>Location Image</FormLabel>
                 <FormControl>
                   <div className="flex items-center gap-4">
-                    <div className="relative w-24 h-24 border rounded-md overflow-hidden bg-muted">
+                    <div className="relative w-24 h-24 border rounded-md overflow-hidden bg-foreground">
                       {value?.image ? (
                         <Image
                           src={`/gallery/${value.image}`}
@@ -60,7 +61,7 @@ export const GalleryForm = ({
                           className="object-cover"
                         />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-muted-foreground">
+                        <div className="flex items-center justify-center h-full text-foreground">
                           <Upload className="h-8 w-8" />
                         </div>
                       )}
@@ -69,8 +70,9 @@ export const GalleryForm = ({
                       <Input
                         {...field}
                         id="location-image"
-                        // type="file"
-                        // accept="image/*"
+                        type="file"
+                        accept="image/*"
+                        onChange={uploadFile}
                         className="hidden"
                       />
                       <Label

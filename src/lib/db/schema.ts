@@ -90,3 +90,48 @@ export const authenticators = pgTable(
     },
   ]
 );
+
+export const projects = pgTable("project", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  description: text("description"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
+export const locations = pgTable("locations", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  projectId: text("project_id")
+    .notNull()
+    .references(() => projects.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  description: text("description"),
+  latitude: text("latitude").notNull(),
+  longitude: text("longitude").notNull(),
+  heroImageUrl: text("image_url"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});
+
+export const s3Files = pgTable("s3_files", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  objectKey: text("object_key").notNull(),
+  fileUrl: text("file_url").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id),
+  uploadTimestamp: timestamp("upload_timestamp", {
+    mode: "date",
+  })
+    .defaultNow()
+    .notNull(),
+});
